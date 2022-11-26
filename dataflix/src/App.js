@@ -9,7 +9,8 @@ import Papa from "papaparse";
 import netflix_titles from "./dataset/netflix_titles.csv";
 
 function App() {
-  
+  //const [records, setRecords] = useState(null);
+
   useEffect(() => {
     Papa.parse(netflix_titles, {
       download: true,
@@ -28,8 +29,8 @@ function App() {
         <BrowserRouter>
           <NavBar></NavBar>
           <Routes>
-            <Route exact path="/" element={<Evolution />}></Route>
-            <Route exact path="/world" element={<World />}></Route>
+            <Route exact path="/" element={<Evolution />} render={(props) => <Evolution {...props} />}></Route>
+            <Route exact path="/world" element={<World />} render={(props) => <World {...props} />}></Route>
           </Routes>
         </BrowserRouter>
       </div>
