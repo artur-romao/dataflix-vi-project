@@ -2,6 +2,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import "./Navbar.css"
+import { Link } from 'react-router-dom'
 
 function NavBar() {
   return (
@@ -9,10 +10,10 @@ function NavBar() {
       <Container>
         <Navbar.Brand><div className='dataflix'>Dataflix</div></Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        <Navbar.Collapse id="responsive-navbar-nav" className='title-pages'>
+        <Navbar.Collapse id="responsive-navbar-nav" >
           <Nav className="me-auto">
-            <Nav.Link href="/"><div>Netflix's Evolution</div></Nav.Link>
-            <Nav.Link href="/world"><div>Netflix in the World</div></Nav.Link>
+            <Nav.Link><Link className='title-pages' to='/'>Netflix's Evolution</Link></Nav.Link>
+            <Nav.Link><Link className='title-pages' to='/world'>Netflix in the World</Link></Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
