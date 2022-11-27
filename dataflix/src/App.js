@@ -6,7 +6,6 @@ import Evolution from "./components/Evolution/Evolution";
 import World from "./components/World/World";
 import Papa from "papaparse";
 import netflix_titles from "./dataset/netflix_titles.csv";
-import { useState } from "react";
 
 function App() {
   const [data, setData] = useState(null);

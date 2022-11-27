@@ -5,18 +5,18 @@ import * as d3 from 'd3';
 const Evolution = (props) => {
   
   const [data, setData] = useState(props.data);
-
+  console.log(props.data);
   useEffect(() => {
-    TreatData(data);
-  }, [data]);
+    setData(props.data);
+    TreatData(data)
+  }, [props.data]);
 
-  const TreatData = (data) => {
+  const TreatData = (values) => {
     let dataset = {}
-    for (let i = 0; i < data.length; i++) {
-      date_added = data[i].date_added;
-      if (date_added != "") {
-        date_added.trim();
-        date_added_list = date_added.split(" ");
+    for (let i = 0; i < values.length; i++) {
+      let date_added = values[i].date_added;
+      if (date_added !== "") {
+        let date_added_list = date_added.trim().split(" ");
         date_added_list.splice(1, 1) // remove the day since we don't need it, the array will be [month, year]
         if (date_added_list[1] in dataset) { // if the year is already a key 
           if (date_added_list[0] in dataset[date_added_list[1]]) { // check if the month is already a key
@@ -27,9 +27,9 @@ const Evolution = (props) => {
           }
         }
         else { // if not, add it
+          dataset[date_added_list[1]] = {};
           dataset[date_added_list[1]][date_added_list[0]] = 1;
         }
-
       }
     }
   }
@@ -56,6 +56,7 @@ const Evolution = (props) => {
   let parseTime = d3.timeParse("%d/%m/%Y");
   //let parseTime = d3.timeParse("%B/%d/%Y");
   let formatTime = d3.timeFormat("%a/%b/%Y");
+  //let formatTime = d3.timeFormat("%B/%d/%Y");
 
   let x = d3.scaleTime()
   .range([0, width]);
