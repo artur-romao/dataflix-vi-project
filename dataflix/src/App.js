@@ -7,9 +7,10 @@ import World from "./components/World/World";
 import { useEffect } from "react";
 import Papa from "papaparse";
 import netflix_titles from "./dataset/netflix_titles.csv";
+import { useState } from "react";
 
 function App() {
-  //const [records, setRecords] = useState(null);
+  const [data, setData] = useState(null);
 
   useEffect(() => {
     Papa.parse(netflix_titles, {
@@ -19,6 +20,7 @@ function App() {
         for (let i = 1; i < results.data.length; i++) {
           values.push({type: results.data[i][1], director: results.data[i][3], cast: results.data[i][4], country: results.data[i][5], date_added: results.data[i][6], age_rating: results.data[i][8], duration: results.data[i][9], genres: results.data[i][10]});
         }
+        setData(values);
       }
     });
   }, []);
@@ -29,8 +31,8 @@ function App() {
         <BrowserRouter>
           <NavBar></NavBar>
           <Routes>
-            <Route exact path="/" element={<Evolution />} render={(props) => <Evolution {...props} />}></Route>
-            <Route exact path="/world" element={<World />} render={(props) => <World {...props} />}></Route>
+            <Route exact path="/" element={<Evolution data={data}/>} ></Route>
+            <Route exact path="/world" element={<World data={data}/>}></Route>
           </Routes>
         </BrowserRouter>
       </div>
