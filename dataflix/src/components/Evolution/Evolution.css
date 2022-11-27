@@ -1,0 +1,27 @@
+.evolution-chart h1 {
+    text-align: center;
+}
+
+body{
+    background-color: #222;
+    font-family: arial, sans-serif;
+    font-size: 20px;  
+    padding: 10px;
+    }
+    
+    .axis {
+      font: 10px sans-serif;
+    }
+    .axis path,
+    .axis line {
+      fill: none;
+    /*   stroke: tomato; */
+      shape-rendering: crispEdges;
+    }
+    
+    .line {
+      fill: none;
+      stroke: red;
+      stroke-width: 3px;
+    }
+    
