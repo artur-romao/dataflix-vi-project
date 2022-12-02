@@ -5,36 +5,54 @@ import * as d3 from 'd3';
 const Evolution = (props) => {
   
   const [data, setData] = useState(props.data);
-  console.log(props.data);
+  let dataset = [];
+  //console.log(props.data);
   useEffect(() => {
     setData(props.data);
-    TreatData(data)
+    //dataset = TreatData(data)
+    //console.log("useEffect", dataset);
   }, [props.data]);
 
-  const TreatData = (values) => {
-    let dataset = {}
+  function TreatData(values) {
+    let added_content_dates = {}
     for (let i = 0; i < values.length; i++) {
       let date_added = values[i].date_added;
       if (date_added !== "") {
         let date_added_list = date_added.trim().split(" ");
         date_added_list.splice(1, 1) // remove the day since we don't need it, the array will be [month, year]
-        if (date_added_list[1] in dataset) { // if the year is already a key 
-          if (date_added_list[0] in dataset[date_added_list[1]]) { // check if the month is already a key
-            dataset[date_added_list[1]][date_added_list[0]] += 1; // if it is, increment the value
-          }
-          else {
-            dataset[date_added_list[1]][date_added_list[0]] = 1; // if it isn't, create a new key-value pair
-          }
+        let date_added_string = date_added_list[0] + " " + date_added_list[1]; // construct the date string "month year"
+        if (date_added_string in added_content_dates) { // if "month year" is already a key 
+          added_content_dates[date_added_string] += 1; // increment the value
         }
-        else { // if not, add it
-          dataset[date_added_list[1]] = {};
-          dataset[date_added_list[1]][date_added_list[0]] = 1;
+        else { // if not, start the counter
+          added_content_dates[date_added_string] = 1;
         }
       }
     }
+    let dataset = []
+    for (let key in added_content_dates) {
+      dataset.push({date: key, count: added_content_dates[key]})
+    }
+    
+    // Sort the dataset by date
+    let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+    dataset = dataset.sort((a, b) => {
+      let a_date = a.date.split(" ");
+      let b_date = b.date.split(" ");
+      if (a_date[1] === b_date[1]) {
+        return months.indexOf(a_date[0]) - months.indexOf(b_date[0]);
+      }
+      else {
+        return a_date[1] - b_date[1];
+      }
+    })
+
+    return dataset;
   }
 
-  /* var dataset = [
+  dataset = TreatData(data)
+  console.log("dataset", dataset);
+  /* dataset = [
     {date: "01/01/2016", pizzas: 10000},
     {date: "01/02/2016", pizzas: 20000},
     {date: "01/03/2016", pizzas: 40000},
@@ -47,16 +65,18 @@ const Evolution = (props) => {
     {date: "01/10/2016", pizzas: 20000},
     {date: "01/11/2016", pizzas: 10000},
     {date: "01/12/2016", pizzas: 90000},
-  ];
+  ]; */
+
+  const d3LineChart = useRef();
 
   let margin = {top: 40, right: 40, bottom: 40, left: 60},
-  width = 700 - margin.left - margin.right,
-  height = 400 - margin.top - margin.bottom;
+  width = 1000 - margin.left - margin.right,
+  height = 600 - margin.top - margin.bottom;
 
-  let parseTime = d3.timeParse("%d/%m/%Y");
-  //let parseTime = d3.timeParse("%B/%d/%Y");
+  //let parseTime = d3.timeParse("%d/%m/%Y");
+  let parseTime = d3.timeParse("%B %Y");
   let formatTime = d3.timeFormat("%a/%b/%Y");
-  //let formatTime = d3.timeFormat("%B/%d/%Y");
+  //let formatTime = d3.timeFormat("%B %Y");
 
   let x = d3.scaleTime()
   .range([0, width]);
@@ -66,10 +86,10 @@ const Evolution = (props) => {
 
   // Line
   let line = d3.line()
-  .x(function(d) { return x(this.parseTime(d.date)); })
-  .y(function(d) { return y(d.pizzas/1000); })
+  .x(function(d) { return x(parseTime(d.date)); })
+  .y(function(d) { return y(d.count); })
 
-  var svg = d3.select("body").append("svg")
+  var svg = d3.select(d3LineChart.current)
     .style("background-color", '#888')
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
@@ -78,7 +98,7 @@ const Evolution = (props) => {
 
 
   x.domain(d3.extent(dataset, function(d) { return parseTime(d.date); }));
-  y.domain(d3.extent(dataset, function(d) { return d.pizzas/1000; }));
+  y.domain(d3.extent(dataset, function(d) { return d.count; }));
 
   // Axes
   svg.append("g")
@@ -103,32 +123,32 @@ const Evolution = (props) => {
             .attr("transform", "translate("+ (width/2) +","+(height-(margin.bottom -74))+")")
             .text("Date");
 
-  //  Chart Title
+  /* //  Chart Title
   svg.append("text")
         .attr("x", (width / 2))             
         .attr("y", 20 - (margin.top / 2))
         .attr("text-anchor", "middle")  
         .style("font-size", "16px") 
-        .text("Pizza consumption");
+        .text("Pizza consumption"); */
 
   // Data Lines:
 
   svg.append("path")
       .datum(dataset)
     .attr("class", "line")
-    .attr("d", line); */
+    .attr("d", line);
 
 
 
   return (
-    <div className='evolution-chart'>
+    <>
       <h1>
-        Netflix's content evolution over the years
+          Netflix's content evolution over the years
       </h1>
-      <div className='evolution-chart-chart'>
-
+      <div className='evolution-chart'>
+        <svg ref={d3LineChart}></svg>
       </div>
-    </div>
+    </>
   );
 }
   
