@@ -1,6 +1,11 @@
 .dataflix {
   color: #D81F26;
+  text-decoration: none;
   font-size: 2.5rem;
+}
+
+.dataflix:hover {
+  color: #83050a;
 }
 
 .title-pages {

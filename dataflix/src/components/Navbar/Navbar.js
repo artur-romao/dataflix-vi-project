@@ -10,13 +10,13 @@ function NavBar() {
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
         <Container>
           <Navbar.Brand>
-            <div className="dataflix">Dataflix</div>
+            <Link className="dataflix" to="/">Dataflix</Link>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
               <Nav.Link>
-                <Link className="title-pages" to="/">
+                <Link className="title-pages" to="/evolution">
                   Netflix's Evolution
                 </Link>
               </Nav.Link>

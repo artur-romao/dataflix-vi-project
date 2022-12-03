@@ -2,6 +2,7 @@ import { React, useEffect, useState } from 'react';
 import "./App.css";
 import NavBar from "./components/Navbar/Navbar";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./components/Home/Home";
 import Evolution from "./components/Evolution/Evolution";
 import World from "./components/World/World";
 import Papa from "papaparse";
@@ -38,7 +39,8 @@ function App() {
       <div className="app">
           <NavBar></NavBar>
           <Routes>
-            <Route exact path="/" element={<Evolution data={data}/>}></Route>
+            <Route exact path="/" element={<Home data={data}/>}></Route>
+            <Route exact path="/evolution" element={<Evolution data={data}/>}></Route>
             <Route path="/world" element={<World data={data}/>}></Route>
             <Route path="/age-restriction" element={<AgeRestriction data={data}/>}></Route>
           </Routes>

@@ -5,10 +5,111 @@ import * as d3 from 'd3';
 const Evolution = (props) => {
   
   const [data, setData] = useState(props.data);
+  const d3LineChart = useRef();
   //let dataset = [];
   //console.log(props.data);
   useEffect(() => {
     setData(props.data);
+    /* let dataset = [];
+    let movies_dataset = []
+    let tv_shows_dataset = [] */
+    let [dataset, movies_dataset, tv_shows_dataset] = TreatData(data);
+    
+
+    let margin = {top: 40, right: 40, bottom: 40, left: 60},
+    width = 1000 - margin.left - margin.right,
+    height = 600 - margin.top - margin.bottom;
+
+    //let parseTime = d3.timeParse("%B %Y");
+    let parseTime = d3.timeParse("%Y");
+    let formatTime = d3.timeFormat("%a/%b/%Y");
+    //let formatTime = d3.timeFormat("%B %Y");
+
+    let x = d3.scaleTime()
+    .range([0, width]);
+
+    let y = d3.scaleLinear()
+    .range([height, 0]);
+
+    // Line
+    let line = d3.line()
+    .x(function(d) { return x(parseTime(d.date)); })
+    .y(function(d) { return y(d.count); })
+
+    // Line
+    let line2 = d3.line()
+    .x(function(d) { return x(parseTime(d.date)); })
+    .y(function(d) { return y(d.count); })
+
+    // Line
+    let line3 = d3.line()
+    .x(function(d) { return x(parseTime(d.date)); })
+    .y(function(d) { return y(d.count); })
+
+    var svg = d3.select(d3LineChart.current)
+      .style("background-color", '#888')
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
+    x.domain(d3.extent(dataset, function(d) { return parseTime(d.date); }));
+    y.domain(d3.extent(movies_dataset, function(d) { return d.count; }));
+
+    // Axes
+    svg.append("g")
+    .attr("class", "axis axis--x")
+    .attr("transform", "translate(0," + height + ")")
+    .call(d3.axisBottom(x));
+
+    svg.append("g")
+    .attr("class", "axis axis--y")
+    .call(d3.axisLeft(y));  
+
+    // Labels
+    svg.append("text")
+              .attr("text-anchor", "middle")
+              .style("font-size", "14px")
+              .attr("transform", "translate("+ (margin.left - 94 ) +","+(height/2)+")rotate(-90)")  
+              .text("Number of items added");
+
+    svg.append("text")
+              .style("font-size", "14px")
+              .attr("text-anchor", "middle") 
+              .attr("transform", "translate("+ (width/2) +","+(height-(margin.bottom -74))+")")
+              .text("Date");
+
+    svg.append("circle").attr("cx",width-120).attr("cy",20).attr("r", 6).style("fill", "#ff0000")
+    svg.append("circle").attr("cx",width-120).attr("cy",40).attr("r", 6).style("fill", "#0000ff")
+    svg.append("text").attr("x", width-100).attr("y", 20).text("Movies").style("font-size", "15px").attr("alignment-baseline","middle")
+    svg.append("text").attr("x", width-100).attr("y", 40).text("TV Shows").style("font-size", "15px").attr("alignment-baseline","middle")
+
+
+    /* //  Chart Title
+    svg.append("text")
+          .attr("x", (width / 2))             
+          .attr("y", 20 - (margin.top / 2))
+          .attr("text-anchor", "middle")  
+          .style("font-size", "16px") 
+          .text("Pizza consumption"); */
+
+    // Data Lines:
+
+    svg.append("path")
+        .datum(movies_dataset)
+        .attr("class", "line")
+        .attr("d", line)
+      
+    svg.append("path")  
+        .datum(tv_shows_dataset)
+        .attr("class", "line2")
+        .attr("d", line2);
+    
+    /* svg.append("path")
+        .datum(dataset)
+      .attr("class", "line3")
+      .attr("d", line3) */
   }, [props.data]);
 
   function TreatData(values) {
@@ -85,108 +186,6 @@ const Evolution = (props) => {
     })
     return dataset;
   } */
-
-  /* let dataset = [];
-  let movies_dataset = []
-  let tv_shows_dataset = [] */
-  let [dataset, movies_dataset, tv_shows_dataset] = TreatData(data);
-  
-  const d3LineChart = useRef();
-
-  let margin = {top: 40, right: 40, bottom: 40, left: 60},
-  width = 1000 - margin.left - margin.right,
-  height = 600 - margin.top - margin.bottom;
-
-  //let parseTime = d3.timeParse("%B %Y");
-  let parseTime = d3.timeParse("%Y");
-  let formatTime = d3.timeFormat("%a/%b/%Y");
-  //let formatTime = d3.timeFormat("%B %Y");
-
-  let x = d3.scaleTime()
-  .range([0, width]);
-
-  let y = d3.scaleLinear()
-  .range([height, 0]);
-
-  // Line
-  let line = d3.line()
-  .x(function(d) { return x(parseTime(d.date)); })
-  .y(function(d) { return y(d.count); })
-
-  // Line
-  let line2 = d3.line()
-  .x(function(d) { return x(parseTime(d.date)); })
-  .y(function(d) { return y(d.count); })
-
-  // Line
-  let line3 = d3.line()
-  .x(function(d) { return x(parseTime(d.date)); })
-  .y(function(d) { return y(d.count); })
-
-  var svg = d3.select(d3LineChart.current)
-    .style("background-color", '#888')
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-
-  x.domain(d3.extent(dataset, function(d) { return parseTime(d.date); }));
-  y.domain(d3.extent(movies_dataset, function(d) { return d.count; }));
-
-  // Axes
-  svg.append("g")
-  .attr("class", "axis axis--x")
-  .attr("transform", "translate(0," + height + ")")
-  .call(d3.axisBottom(x));
-
-  svg.append("g")
-  .attr("class", "axis axis--y")
-  .call(d3.axisLeft(y));  
-
-  // Labels
-  svg.append("text")
-            .attr("text-anchor", "middle")
-            .style("font-size", "14px")
-            .attr("transform", "translate("+ (margin.left - 94 ) +","+(height/2)+")rotate(-90)")  
-            .text("Number of items added");
-
-  svg.append("text")
-            .style("font-size", "14px")
-            .attr("text-anchor", "middle") 
-            .attr("transform", "translate("+ (width/2) +","+(height-(margin.bottom -74))+")")
-            .text("Date");
-
-  svg.append("circle").attr("cx",width-120).attr("cy",20).attr("r", 6).style("fill", "#ff0000")
-  svg.append("circle").attr("cx",width-120).attr("cy",40).attr("r", 6).style("fill", "#0000ff")
-  svg.append("text").attr("x", width-100).attr("y", 20).text("Movies").style("font-size", "15px").attr("alignment-baseline","middle")
-  svg.append("text").attr("x", width-100).attr("y", 40).text("TV Shows").style("font-size", "15px").attr("alignment-baseline","middle")
-
-
-  /* //  Chart Title
-  svg.append("text")
-        .attr("x", (width / 2))             
-        .attr("y", 20 - (margin.top / 2))
-        .attr("text-anchor", "middle")  
-        .style("font-size", "16px") 
-        .text("Pizza consumption"); */
-
-  // Data Lines:
-
-  svg.append("path")
-      .datum(movies_dataset)
-      .attr("class", "line")
-      .attr("d", line)
-    
-  svg.append("path")  
-      .datum(tv_shows_dataset)
-      .attr("class", "line2")
-      .attr("d", line2);
-  
-  /* svg.append("path")
-      .datum(dataset)
-    .attr("class", "line3")
-    .attr("d", line3) */
 
   return (
     <>
