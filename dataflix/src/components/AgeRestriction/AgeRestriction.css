@@ -22,6 +22,10 @@ g > line {
 .barChart {
     position: absolute;
     left: 50%;
-    top: 275%;
+    top: 300%;
     transform: translate(-50%, -50%);
+}
+
+.css-tj5bde-Svg {
+    color: red;
 }
