@@ -1,39 +1,63 @@
 import "./AgeRestriction.css";
 import * as d3 from "d3";
 import * as d3Selection from "d3-selection";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import Select from "react-select";
 import makeAnimated from 'react-select/animated';
 
 const animatedComponents = makeAnimated();
 
-function AgeRestriction(props) {
-  const views_options = [
-    { value: "movies", label: "Movies" },
-    { value: "tvShows", label: "Tv Shows" },
-  ];
-  
-  const customStyles = {
-    option: (provided, state) => ({
-      ...provided,
-      color: state.isSelected ? 'black' : 'black',
-    }),
-  }
-  console.log("Data");
-  console.log(props.data);
-  const [values] = useState(props.data);
+const update = (data, g1, x, y, height, tooltip) => {
+  var u = g1.selectAll("rect").data(data);
+  console.log(data)
+  console.log(g1)
+  u.enter()
+    .append("rect")
+    .merge(u)
+    .transition()
+    .duration(1000)
+    .style("fill", "#D81F26")
+    .attr("x", function (d) {
+      return x(d.group);
+    })
+    .attr("y", function (d) {
+      return y(d.value);
+    })
+    .attr("width", x.bandwidth())
+    .attr("height", function (d) {
+      return height - y(d.value);
+    })
+    .attr("fill", "#69b3a2");
 
+  g1.selectAll("rect")
+    .on("mouseover", function (d) {
+      tooltip.transition().duration(200).style("opacity", 0.9);
+      tooltip.html(d.value);
+      d3Selection.select(this).style("fill", "#b71a20");
+    }) // show tooltip
+    .on("mousemove", function (d) {
+      tooltip
+        .style("top", d3Selection.event.pageY - 10 + "px")
+        .style("left", d3Selection.event.pageX + 10 + "px");
+    })
+    .on("mouseout", function (d) {
+      tooltip.transition().duration(500).style("opacity", 0);
+      d3Selection.select(this).style("fill", "#D81F26");
+    }); // hide tooltip
+}
+
+const generateDataObjects = (data) => {
   var data_movies_shows = [];
   var data_movies = [];
   var data_shows = [];
   var ages_restrictions = [];
 
-  for (let i = 0; i < values.length; i++) {
-    let age_rating = values[i].age_rating;
+  for (let i = 0; i < data.length; i++) {
+    let age_rating = data[i].age_rating;
     if (age_rating !== "" && !age_rating.includes("min")) {
       if (ages_restrictions.includes(age_rating)) {
         data_movies_shows.find((x) => x.group === age_rating).value++;
-        if (values[i].type === "Movie") {
+        if (data[i].type === "Movie") {
           if (data_movies.find((x) => x.group === age_rating)) {
             data_movies.find((x) => x.group === age_rating).value++;
           } else {
@@ -49,7 +73,7 @@ function AgeRestriction(props) {
       } else {
         ages_restrictions.push(age_rating);
         data_movies_shows.push({ group: age_rating, value: 1 });
-        if (values[i].type === "Movie") {
+        if (data[i].type === "Movie") {
           data_movies.push({ group: age_rating, value: 1 });
         }else{
           data_shows.push({ group: age_rating, value: 1 });
@@ -57,14 +81,15 @@ function AgeRestriction(props) {
       }
     }
   }
+  return {
+    data_movies_shows,
+    data_movies,
+    data_shows,
+    ages_restrictions
+  }
+}
 
-  console.log(data_movies_shows);
-  console.log(data_movies);
-
-  const d3BarChart = useRef();
-  const d3G = useRef();
-  const d3G2 = useRef();
-  const d3G3 = useRef();
+const generateElements = (d3BarChart, d3G, d3G2, d3G3, ages_restrictions) => {
 
   // set the dimensions and margins of the graph
   var margin = { top: 30, right: 30, bottom: 70, left: 60 },
@@ -125,47 +150,53 @@ function AgeRestriction(props) {
     .style("border-radius", "5px")
     .style("color", "#fff");
 
-  // A function that create / update the plot for a given variable:
-  function update(data) {
-    var u = g1.selectAll("rect").data(data);
+  return {
+    tooltip,
+    svg,
+    g1,
+    x,
+    y,
+    height,
+    width
+  }
+}
 
-    u.enter()
-      .append("rect")
-      .merge(u)
-      .transition()
-      .duration(1000)
-      .style("fill", "#D81F26")
-      .attr("x", function (d) {
-        return x(d.group);
-      })
-      .attr("y", function (d) {
-        return y(d.value);
-      })
-      .attr("width", x.bandwidth())
-      .attr("height", function (d) {
-        return height - y(d.value);
-      })
-      .attr("fill", "#69b3a2");
+function AgeRestriction(props) {
 
-    g1.selectAll("rect")
-      .on("mouseover", function (d) {
-        tooltip.transition().duration(200).style("opacity", 0.9);
-        tooltip.html(d.value);
-        d3Selection.select(this).style("fill", "#b71a20");
-      }) // show tooltip
-      .on("mousemove", function (d) {
-        tooltip
-          .style("top", d3Selection.event.pageY - 10 + "px")
-          .style("left", d3Selection.event.pageX + 10 + "px");
-      })
-      .on("mouseout", function (d) {
-        tooltip.transition().duration(500).style("opacity", 0);
-        d3Selection.select(this).style("fill", "#D81F26");
-      }); // hide tooltip
+  const { data } = props;
+  const views_options = [
+    { value: "movies", label: "Movies" },
+    { value: "tvShows", label: "Tv Shows" },
+  ];
+  
+  const customStyles = {
+    option: (provided, state) => ({
+      ...provided,
+      color: state.isSelected ? 'black' : 'black',
+    }),
   }
 
-  // Initialize the plot with the first dataset
-  update(data_movies_shows);
+  const d3BarChart = useRef();
+  const d3G = useRef();
+  const d3G2 = useRef();
+  const d3G3 = useRef();
+
+  let tooltip, svg, g1, x, y, height, width
+  let data_movies_shows, data_movies, data_shows, ages_restrictions
+
+  const updateMethod = (data) => {
+    update(data, g1, x, y, height, tooltip);
+  }
+
+  useEffect(() => {
+    if (!data) return
+    ({ data_movies_shows, data_movies, data_shows, ages_restrictions } = generateDataObjects(data));
+    ({ tooltip, svg, g1, x, y, height, width } = generateElements(d3BarChart, d3G, d3G2, d3G3, ages_restrictions));
+    // A function that create / update the plot for a given variable:
+  
+    // Initialize the plot with the first dataset
+    updateMethod(data_movies_shows);
+  }, data)
 
   return (
     <>
@@ -182,15 +213,15 @@ function AgeRestriction(props) {
         onChange={(e) => {
           if (e.length === 1) {
             if (e[0].value === "movies") {
-              update(data_movies);
+              updateMethod(data_movies);
             } else {
-              update(data_shows);
+              updateMethod(data_shows);
             }
           } else if (e.length === 0) {
-            update([]);
+            updateMethod([]);
           }
           else {
-            update(data_movies_shows);
+            updateMethod(data_movies_shows);
           }
         }}
       />

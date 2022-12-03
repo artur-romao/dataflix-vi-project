@@ -3,13 +3,11 @@ import "./Evolution.css";
 import * as d3 from 'd3';
 
 const Evolution = (props) => {
-  
-  const [data, setData] = useState(props.data);
+  let { data } = props;
   const d3LineChart = useRef();
   //let dataset = [];
   //console.log(props.data);
   useEffect(() => {
-    setData(props.data);
     /* let dataset = [];
     let movies_dataset = []
     let tv_shows_dataset = [] */
@@ -110,7 +108,7 @@ const Evolution = (props) => {
         .datum(dataset)
       .attr("class", "line3")
       .attr("d", line3) */
-  }, [props.data]);
+  }, [data]);
 
   function TreatData(values) {
     let added_content_dates = {}

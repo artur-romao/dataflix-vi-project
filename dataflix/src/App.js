@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from 'react';
+import { React, useEffect, useState, StrictMode } from 'react';
 import "./App.css";
 import NavBar from "./components/Navbar/Navbar";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -36,15 +36,21 @@ function App() {
 
   return (
     <BrowserRouter>
-      <div className="app">
-          <NavBar></NavBar>
-          <Routes>
-            <Route exact path="/" element={<Home data={data}/>}></Route>
-            <Route exact path="/evolution" element={<Evolution data={data}/>}></Route>
-            <Route path="/world" element={<World data={data}/>}></Route>
-            <Route path="/age-restriction" element={<AgeRestriction data={data}/>}></Route>
-          </Routes>
-      </div>
+      <StrictMode>
+        <div className="app">
+          {data ? (
+            <>
+              <NavBar></NavBar>
+              <Routes>
+                <Route exact path="/" element={<Home data={data}/>}></Route>
+                <Route exact path="/evolution" element={<Evolution data={data}/>}></Route>
+                <Route path="/world" element={<World data={data}/>}></Route>
+                <Route path="/age-restriction" element={<AgeRestriction data={data}/>}></Route>
+              </Routes>
+            </>
+          ) : ''}
+        </div>
+      </StrictMode>
     </BrowserRouter>
   );
 }

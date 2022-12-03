@@ -6,20 +6,15 @@ import * as d3Selection from "d3-selection";
 const World = (props) => {
   const d3Map = useRef();
 
-  console.log("Data");
-  console.log(props.data);
-  const [values, setValues] = useState(props.data);
-
+  const { data } = props;
+  
   useEffect(() => {
-    setValues(props.data);
-    console.log("Values");
-    console.log(values);
 
     const svg = d3.select(d3Map.current),
       width = 800 * (14 / 9),
       height = 750,
       path = d3.geoPath(),
-      data = d3.map(),
+      map = d3.map(),
       worldmap =
         "https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson",
       worldpopulation =
@@ -48,8 +43,8 @@ const World = (props) => {
 
     // Load external data and boot
     let dict = {};
-    for (let i = 0; i < values.length; i++) {
-      let counries = values[i].country.split(",");
+    for (let i = 0; i < data.length; i++) {
+      let counries = data[i].country.split(",");
       for (let j = 0; j < counries.length; j++) {
         let country = counries[j].trim();
         if ("" !== country) {
@@ -66,7 +61,7 @@ const World = (props) => {
       .defer(d3.json, worldmap)
       .defer(d3.csv, worldpopulation, function (d) {
         if (d.name in dict) {
-          data.set(d.code, dict[d.name]);
+          map.set(d.code, dict[d.name]);
         }
       })
       .await(ready);
@@ -135,7 +130,7 @@ const World = (props) => {
 
         // set the color of each country
         .attr("fill", function (d) {
-          d.total = data.get(d.id) || 0;
+          d.total = map.get(d.id) || 0;
           return colorScale(d.total);
         })
 

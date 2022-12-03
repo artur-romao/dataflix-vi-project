@@ -9,8 +9,7 @@ const fontSize = (word) => word.value / 20;
 const rotate = (word) => (word.value % 90) - 45;
 
 function Home(props) {
-    
-    const [data, setData] = useState(props.data);
+    const { data } = props;
     const d3PieChart = useRef();
     const d3WordCloud = useRef();
     
@@ -45,7 +44,6 @@ function Home(props) {
     }
 
     useEffect(() => {
-        setData(props.data);
         
         let width = 450
         let height = 450
@@ -103,26 +101,29 @@ function Home(props) {
         .style("font-weight", "bold")
 
 
-    }, [props.data]);
+    }, [data]);
 
     return (
         <>
             <h1>
                 Welcome to Dataflix! Here you can find some interesting statistics about Netflix's content, explore at your own will!
             </h1>
-            <div className='pieChart'>
-                <svg ref={d3PieChart}></svg>
+            <div style={{display: 'flex'}}>
+                <div className='pieChart'>
+                    <svg ref={d3PieChart}></svg>
+                </div>
+                <div style={{width: '50vw'}}>
+                    {<WordCloud 
+                        width={1000}
+                        height={750}
+                        data={newData}
+                        fontSize={fontSize}
+                        rotate={rotate}
+                        padding={2}
+                    />}
+                </div>
             </div>
-            {<WordCloud 
-                width={1000}
-                height={750}
-                data={newData}
-                fontSize={fontSize}
-                rotate={rotate}
-                padding={2}
-            />}
-                <svg ref={d3WordCloud}></svg>
-            </>
+        </>
     );
 }
 
