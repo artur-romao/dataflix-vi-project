@@ -6,6 +6,7 @@ import Evolution from "./components/Evolution/Evolution";
 import World from "./components/World/World";
 import Papa from "papaparse";
 import netflix_titles from "./dataset/netflix_titles.csv";
+import AgeRestriction from './components/AgeRestriction/AgeRestriction';
 
 function App() {
   const [data, setData] = useState(null);
@@ -39,6 +40,7 @@ function App() {
           <Routes>
             <Route exact path="/" element={<Evolution data={data}/>}></Route>
             <Route path="/world" element={<World data={data}/>}></Route>
+            <Route path="/age-restriction" element={<AgeRestriction data={data}/>}></Route>
           </Routes>
       </div>
     </BrowserRouter>
