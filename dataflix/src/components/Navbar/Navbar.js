@@ -25,6 +25,11 @@ function NavBar() {
                   Netflix in the World
                 </Link>
               </Nav.Link>
+              <Nav.Link>
+                <Link className="title-pages" to="/age-restriction">
+                  Restriction Ages on Netflix
+                </Link>
+              </Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Container>
