@@ -6,26 +6,26 @@
     stroke: #fff;
 } */
 
-g > text {
-    fill: #fff;
-  }
-  
-g > line {
-      stroke: #fff;
-    }
+.barChart>svg>g>g>g>text {
+  fill: #fff;
+}
+
+.barChart>svg>g>g>g>line {
+  stroke: #fff;
+}
 
 .basic-multi-select {
-    width: 15%;
-    left: 80%;
+  width: 15%;
+  left: 80%;
 }
 
 .barChart {
-    position: absolute;
-    left: 50%;
-    top: 300%;
-    transform: translate(-50%, -50%);
+  position: absolute;
+  left: 50%;
+  top: 300%;
+  transform: translate(-50%, -50%);
 }
 
 .css-tj5bde-Svg {
-    color: red;
+  color: red;
 }

@@ -1,16 +1,16 @@
 import "./AgeRestriction.css";
 import * as d3 from "d3";
 import * as d3Selection from "d3-selection";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import Select from "react-select";
 import makeAnimated from 'react-select/animated';
 
 const animatedComponents = makeAnimated();
 
+// A function that create / update the plot for a given variable:
 const update = (data, g1, x, y, height, tooltip) => {
   var u = g1.selectAll("rect").data(data);
-  console.log(data)
-  console.log(g1)
+
   u.enter()
     .append("rect")
     .merge(u)
@@ -39,7 +39,7 @@ const update = (data, g1, x, y, height, tooltip) => {
       tooltip
         .style("top", d3Selection.event.pageY - 10 + "px")
         .style("left", d3Selection.event.pageX + 10 + "px");
-    })
+    }) // move tooltip
     .on("mouseout", function (d) {
       tooltip.transition().duration(500).style("opacity", 0);
       d3Selection.select(this).style("fill", "#D81F26");
@@ -111,14 +111,14 @@ const generateElements = (d3BarChart, d3G, d3G2, d3G3, ages_restrictions) => {
     .range([0, width])
     .domain(ages_restrictions)
     .padding(0.2);
-  var g2 = d3Selection
+  d3Selection
     .select(d3G2.current)
     .attr("transform", "translate(0," + height + ")")
     .call(d3.axisBottom(x));
 
   // Add Y axis
   var y = d3.scaleLinear().domain([0, 3205]).range([height, 0]);
-  var g3 = d3Selection
+  d3Selection
     .select(d3G3.current)
     .attr("class", "myYaxis")
     .call(d3.axisLeft(y));
@@ -128,14 +128,16 @@ const generateElements = (d3BarChart, d3G, d3G2, d3G3, ages_restrictions) => {
     .attr("text-anchor", "end")
     .attr("x", width / 2)
     .attr("y", height + margin.top + 20)
-    .text("Age Restriction");
+    .text("Age Restriction")
+    .style("fill", "#fff");
 
   g1.append("text")
     .attr("text-anchor", "end")
     .attr("transform", "rotate(-90)")
     .attr("y", -margin.left + 15)
     .attr("x", -margin.top - height / 2 + 150)
-    .text("Number of Movies/TV Shows");
+    .text("Number of Movies/TV Shows")
+    .style("fill", "#fff");
 
   // create tooltip element
   const tooltip = d3Selection
@@ -192,7 +194,6 @@ function AgeRestriction(props) {
     if (!data) return
     ({ data_movies_shows, data_movies, data_shows, ages_restrictions } = generateDataObjects(data));
     ({ tooltip, svg, g1, x, y, height, width } = generateElements(d3BarChart, d3G, d3G2, d3G3, ages_restrictions));
-    // A function that create / update the plot for a given variable:
   
     // Initialize the plot with the first dataset
     updateMethod(data_movies_shows);

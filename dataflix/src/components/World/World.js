@@ -200,7 +200,7 @@ const World = (props) => {
         .attr("y", 580)
         .text("Number of Movies/TV Shows");
     }
-  }, []);
+  }, [data]);
 
   return (
     <>
