@@ -92,8 +92,8 @@ function Home(props) {
       .append("text")
       .text(function (d) {
         return d.data.key === "a"
-          ? "TV shows: " + String(tv_shows.length)
-          : "Movies: " + String(movies.length);
+          ? "TV shows: " + String(Math.round(tv_shows.length / (tv_shows.length + movies.length) * 100 * 10) / 10).slice(0, 4) + "%"
+          : "Movies: " + String(Math.round(movies.length/ (tv_shows.length + movies.length) * 100 * 10) / 10).slice(0, 4) + "%"
       })
       .attr("transform", function (d) {
         return "translate(" + arcGenerator.centroid(d) + ")";
@@ -132,8 +132,8 @@ function Home(props) {
               width={1000}
               height={750}
               data={newData}
-              // fontSize={fontSize}
-              // rotate={rotate}
+              //fontSize={fontSize}
+              //rotate={rotate}
               padding={2}
             />
           }
