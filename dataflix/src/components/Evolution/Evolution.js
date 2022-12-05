@@ -55,16 +55,16 @@ function TreatData(values) {
 }
 
 function createGraph(dados, d3MultiLineChart) {
-  var width = 500;
-  var height = 300;
+  var width = 1200;
+  var height = 720;
   var margin = 50;
   var duration = 250;
 
   var lineOpacity = "0.25";
   var lineOpacityHover = "0.85";
   var otherLinesOpacityHover = "0.1";
-  var lineStroke = "1.5px";
-  var lineStrokeHover = "2.5px";
+  var lineStroke = "4.5px";
+  var lineStrokeHover = "6px";
 
   var circleOpacity = "0.85";
   var circleOpacityOnLineHover = "0.25";
@@ -91,7 +91,7 @@ function createGraph(dados, d3MultiLineChart) {
     .domain([0, d3.max(dados[0].values, (d) => d.count)])
     .range([height - margin, 0]);
 
-  var color = d3.scaleOrdinal(d3.schemeCategory10);
+  var color = ["#D81F26", "#047af7"];
 
   /* Add SVG */
   var svg = d3
@@ -119,7 +119,7 @@ function createGraph(dados, d3MultiLineChart) {
       svg
         .append("text")
         .attr("class", "title-text")
-        .style("fill", color(i))
+        .style("fill", color[i])
         .text(d.name)
         .attr("text-anchor", "middle")
         .attr("x", (width - margin) / 2)
@@ -131,7 +131,7 @@ function createGraph(dados, d3MultiLineChart) {
     .append("path")
     .attr("class", "line")
     .attr("d", (d) => line(d.values))
-    .style("stroke", (d, i) => color(i))
+    .style("stroke", (d, i) => color[i])
     .style("opacity", lineOpacity)
     .on("mouseover", function (d) {
       d3.selectAll(".line").style("opacity", otherLinesOpacityHover);
@@ -153,7 +153,7 @@ function createGraph(dados, d3MultiLineChart) {
     .data(dados)
     .enter()
     .append("g")
-    .style("fill", (d, i) => color(i))
+    .style("fill", (d, i) => color[i])
     .selectAll("circle")
     .data((d) => d.values)
     .enter()
@@ -203,19 +203,34 @@ function createGraph(dados, d3MultiLineChart) {
 
   svg
     .append("g")
-    .attr("class", "x axis")
+    .attr("class", "x-axis")
     .attr("transform", `translate(0, ${height - margin})`)
     .call(xAxis);
 
   svg
     .append("g")
-    .attr("class", "y axis")
+    .attr("class", "y-axis")
     .call(yAxis)
     .append("text")
     .attr("y", 15)
+    .attr("transform", "rotate(-90)");
+
+  svg
+    .append("text")
+    .attr("text-anchor", "end")
+    .attr("x", width / 2)
+    .attr("y", height - 25)
+    .text("Time")
+    .style("fill", "#fff");
+
+  svg
+    .append("text")
+    .attr("text-anchor", "end")
     .attr("transform", "rotate(-90)")
-    .attr("fill", "#000")
-    .text("Total values");
+    .attr("y", -35)
+    .attr("x", -height / 3.5)
+    .text("Number of Movies/TV Shows added")
+    .style("fill", "#fff");
 }
 
 const Evolution = (props) => {
@@ -239,7 +254,7 @@ const Evolution = (props) => {
           <p>Link 3</p>
         </div>
       </div>
-      <div id="chart">
+      <div className="evolution-chart">
         <svg ref={d3MultiLineChart}></svg>
       </div>
     </>

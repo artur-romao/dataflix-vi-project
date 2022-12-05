@@ -44,12 +44,12 @@ const World = (props) => {
     // Load external data and boot
     let dict = {};
     for (let i = 0; i < data.length; i++) {
-      let counries = data[i].country.split(",");
-      for (let j = 0; j < counries.length; j++) {
-        let country = counries[j].trim();
+      let countries = data[i].country.split(",");
+      for (let j = 0; j < countries.length; j++) {
+        let country = countries[j].trim();
         if ("" !== country) {
           if (country in dict) {
-            dict[country] = dict[country] + 1;
+            dict[country]++;
           } else {
             dict[country] = 1;
           }

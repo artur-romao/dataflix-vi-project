@@ -16,21 +16,17 @@
   shape-rendering: crispEdges;
 }
 
+.x-axis text {
+  fill: #fff;
+}
+
+.y-axis text {
+  fill: #fff;
+}
+
 .line {
   fill: none;
   stroke: red;
-  stroke-width: 3px;
-}
-
-.line2 {
-  fill: none;
-  stroke: blue;
-  stroke-width: 3px;
-}
-
-.line3 {
-  fill: none;
-  stroke: green;
   stroke-width: 3px;
 }
 
