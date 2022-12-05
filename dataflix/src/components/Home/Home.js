@@ -105,7 +105,7 @@ function Home(props) {
 
   return (
     <>
-      <h1 style={{ color: "#e26666" }}>Welcome to Dataflix!</h1>
+      <h1>Welcome to Dataflix!</h1>
       <p className="subtitle">
         Here you can find some interesting statistics about Netflix's content,
         explore at your own will.

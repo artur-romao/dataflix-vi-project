@@ -218,10 +218,7 @@ function AgeRestriction(props) {
             } else {
               updateMethod(data_shows);
             }
-          } else if (e.length === 0) {
-            updateMethod([]);
-          }
-          else {
+          } else {
             updateMethod(data_movies_shows);
           }
         }}

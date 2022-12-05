@@ -190,7 +190,7 @@ const World = (props) => {
         .text(function (d, i) {
           console.log(d);
           if (i === 0) return "< " + d[1];
-          if (d[1] < d[0]) return d[0];
+          if (d[1] < d[0]) return d[0] + " +";
           return d[0] + " - " + d[1];
         });
 
