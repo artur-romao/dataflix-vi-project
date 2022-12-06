@@ -81,8 +81,6 @@ function Home(props) {
       .attr("fill", function (d) {
         return color(d.data.key);
       })
-      .attr("stroke", "black")
-      .style("stroke-width", "2px")
       .style("opacity", 0.7);
 
     svg
@@ -126,17 +124,29 @@ function Home(props) {
         <div className="pieChart">
           <svg ref={d3PieChart}></svg>
         </div>
-        <div style={{ width: "50vw" }}>
+        <div className="word-cloud" style={{ width: "42vw" }}>
           {
             <WordCloud
               width={1000}
               height={750}
               data={newData}
-              //fontSize={fontSize}
-              //rotate={rotate}
+              fontSize={fontSize}
+              rotate={rotate}
               padding={2}
             />
           }
+        </div>
+      </div>
+      <div style={{ display: "flex" }}>
+        <div className="descriptionPieChart">
+          <p>
+            In this pie chart, you can see the Netflix contents distributed by type (Movies and TV Shows).
+          </p>
+        </div>
+        <div className="descriptionWordCloud" style={{ width: "45vw" }}>
+          <p>
+            The genres of Netflix contents are represented in this word cloud. The bigger the word is, the more common that genre is.
+          </p>
         </div>
       </div>
     </>

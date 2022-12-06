@@ -22,7 +22,7 @@
 .barChart {
   position: absolute;
   left: 50%;
-  top: 300%;
+  top: 255%;
   transform: translate(-50%, -50%);
 }
 

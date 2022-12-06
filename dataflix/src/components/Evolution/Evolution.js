@@ -4,6 +4,15 @@ import * as d3 from "d3";
 import * as d3Selection from "d3-selection";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+const theme = createTheme({
+  palette: {
+    danger: {
+      main: '#e26666',
+    },
+  },
+});
 
 function TreatData(values) {
   let added_movies = {};
@@ -56,10 +65,10 @@ function TreatData(values) {
 }
 
 function createGraph(dados, d3MultiLineChart) {
-  var width = 1200;
-  var height = 720;
-  var margin = 50;
-  var duration = 250;
+  var width = 1200 * (6/7);
+  var height = 720 * (6/7);
+  var margin = 50 * (6/7);
+  var duration = 250 * (6/7);
 
   var lineOpacity = "0.25";
   var lineOpacityHover = "0.85";
@@ -223,7 +232,7 @@ function createGraph(dados, d3MultiLineChart) {
     .append("text")
     .attr("text-anchor", "end")
     .attr("x", width / 2)
-    .attr("y", height - 25)
+    .attr("y", height - 8)
     .text("Time")
     .style("fill", "#fff");
 
@@ -231,7 +240,7 @@ function createGraph(dados, d3MultiLineChart) {
     .append("text")
     .attr("text-anchor", "end")
     .attr("transform", "rotate(-90)")
-    .attr("y", -35)
+    .attr("y", -30)
     .attr("x", -height / 3.5)
     .text("Number of Movies/TV Shows added")
     .style("fill", "#fff");
@@ -272,6 +281,7 @@ const Evolution = (props) => {
           analyze.
         </p>
       </div>
+      <ThemeProvider theme={theme}>
       <div className="boxSlider">
         <Box sx={{ width: 300 }}>
           <Slider
@@ -280,9 +290,12 @@ const Evolution = (props) => {
             value={value}
             onChange={handleChange}
             valueLabelDisplay="auto"
+            color="danger"
           />
         </Box>
+        <p>Year range</p>
       </div>
+      </ThemeProvider>
       <div className="evolution-chart">
         <svg ref={d3MultiLineChart}></svg>
       </div>

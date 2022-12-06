@@ -24,7 +24,7 @@ const World = (props) => {
     let world;
 
     // style of geographic projection and scaling
-    const projection = d3.geoNaturalEarth1().translate([width / 2, height / 2]);
+    const projection = d3.geoMercator().translate([width / 2, height / 2]);
 
     // Define color scale
     const colorScale = d3

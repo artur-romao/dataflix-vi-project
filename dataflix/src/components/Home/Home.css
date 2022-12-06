@@ -18,3 +18,15 @@
     align-items: center;
     justify-content: center;
 }
+
+.descriptionPieChart > p{
+  position: relative;
+  text-align: center;
+  left: 25%;
+}
+
+.descriptionWordCloud > p{
+    position: relative;
+  text-align: center;
+  left: 37%;
+  }

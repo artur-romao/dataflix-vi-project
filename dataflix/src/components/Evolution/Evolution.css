@@ -1,8 +1,7 @@
 .evolution-chart {
-  padding: 20px;
   position: absolute;
   left: 50%;
-  top: 400%;
+  top: 250%;
   transform: translate(-50%, -50%);
 }
 
@@ -32,5 +31,14 @@
 
 .boxSlider {
   position: relative;
-  left: 20%;
+  left: 80%;
+}
+
+.boxSlider > div > span {
+  color: #e26666;
+}
+
+.boxSlider > p {
+  position: relative;
+  left: 6%;
 }

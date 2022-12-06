@@ -9,3 +9,4 @@ Refrences
 * https://perials.github.io/responsive-bar-chart-with-d3/
 * https://codesandbox.io/s/50wzl?file=/src/index.js
 * https://codepen.io/zakariachowdhury/pen/JEmjwq
+* https://d3-graph-gallery.com/graph/pie_annotation.html
