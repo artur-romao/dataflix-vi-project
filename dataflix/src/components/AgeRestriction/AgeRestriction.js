@@ -3,7 +3,7 @@ import * as d3 from "d3";
 import * as d3Selection from "d3-selection";
 import { useRef, useEffect } from "react";
 import Select from "react-select";
-import makeAnimated from 'react-select/animated';
+import makeAnimated from "react-select/animated";
 
 const animatedComponents = makeAnimated();
 
@@ -44,7 +44,7 @@ const update = (data, g1, x, y, height, tooltip) => {
       tooltip.transition().duration(500).style("opacity", 0);
       d3Selection.select(this).style("fill", "#D81F26");
     }); // hide tooltip
-}
+};
 
 const generateDataObjects = (data) => {
   var data_movies_shows = [];
@@ -75,7 +75,7 @@ const generateDataObjects = (data) => {
         data_movies_shows.push({ group: age_rating, value: 1 });
         if (data[i].type === "Movie") {
           data_movies.push({ group: age_rating, value: 1 });
-        }else{
+        } else {
           data_shows.push({ group: age_rating, value: 1 });
         }
       }
@@ -85,12 +85,11 @@ const generateDataObjects = (data) => {
     data_movies_shows,
     data_movies,
     data_shows,
-    ages_restrictions
-  }
-}
+    ages_restrictions,
+  };
+};
 
 const generateElements = (d3BarChart, d3G, d3G2, d3G3, ages_restrictions) => {
-
   // set the dimensions and margins of the graph
   var margin = { top: 30, right: 30, bottom: 70, left: 60 },
     width = (460 - margin.left - margin.right) * (7 / 3),
@@ -159,49 +158,62 @@ const generateElements = (d3BarChart, d3G, d3G2, d3G3, ages_restrictions) => {
     x,
     y,
     height,
-    width
-  }
-}
+    width,
+  };
+};
 
 function AgeRestriction(props) {
-
   const { data } = props;
   const views_options = [
     { value: "movies", label: "Movies" },
     { value: "tvShows", label: "Tv Shows" },
   ];
-  
+
   const customStyles = {
     option: (provided, state) => ({
       ...provided,
-      color: state.isSelected ? 'black' : 'black',
+      color: state.isSelected ? "black" : "black",
     }),
-  }
+  };
 
   const d3BarChart = useRef();
   const d3G = useRef();
   const d3G2 = useRef();
   const d3G3 = useRef();
 
-  let tooltip, svg, g1, x, y, height, width
-  let data_movies_shows, data_movies, data_shows, ages_restrictions
+  let tooltip, svg, g1, x, y, height, width;
+  let data_movies_shows, data_movies, data_shows, ages_restrictions;
 
   const updateMethod = (data) => {
     update(data, g1, x, y, height, tooltip);
-  }
+  };
 
   useEffect(() => {
-    if (!data) return
-    ({ data_movies_shows, data_movies, data_shows, ages_restrictions } = generateDataObjects(data));
-    ({ tooltip, svg, g1, x, y, height, width } = generateElements(d3BarChart, d3G, d3G2, d3G3, ages_restrictions));
-  
+    if (!data) return;
+    ({ data_movies_shows, data_movies, data_shows, ages_restrictions } =
+      generateDataObjects(data));
+    ({ tooltip, svg, g1, x, y, height, width } = generateElements(
+      d3BarChart,
+      d3G,
+      d3G2,
+      d3G3,
+      ages_restrictions
+    ));
+
     // Initialize the plot with the first dataset
     updateMethod(data_movies_shows);
-  }, data)
+  }, data);
 
   return (
     <>
       <h1>Number of Movies and TV Shows by Age Group</h1>
+      <div className="descriptionChart">
+        <p>
+          In this bar chart the different age restriction groups are ranked by
+          their number of contents on Netflix. It is possible to filter by
+          Movies, TV Shows or both at the same time.
+        </p>
+      </div>
       <Select
         defaultValue={views_options}
         styles={customStyles}

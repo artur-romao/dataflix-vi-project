@@ -2,6 +2,8 @@ import React, { useEffect, useRef } from "react";
 import "./Evolution.css";
 import * as d3 from "d3";
 import * as d3Selection from "d3-selection";
+import Box from "@mui/material/Box";
+import Slider from "@mui/material/Slider";
 
 function TreatData(values) {
   let added_movies = {};
@@ -50,7 +52,6 @@ function TreatData(values) {
     { name: "Movies", values: movies_dataset },
     { name: "TV Shows", values: tv_shows_dataset }
   );
-  console.log(dataset);
   return dataset;
 }
 
@@ -92,6 +93,9 @@ function createGraph(dados, d3MultiLineChart) {
     .range([height - margin, 0]);
 
   var color = ["#D81F26", "#047af7"];
+
+  // remove the previous graph
+  d3.select(d3MultiLineChart.current).selectAll("*").remove();
 
   /* Add SVG */
   var svg = d3
@@ -235,8 +239,23 @@ function createGraph(dados, d3MultiLineChart) {
 
 const Evolution = (props) => {
   let { data } = props;
-
+  const [value, setValue] = React.useState([2008, 2021]);
   const d3MultiLineChart = useRef();
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+    let dataset = TreatData(data);
+    // remove from dataset all the years that are not in the range
+    for (let i = 0; i < dataset.length; i++) {
+      for (let j = 0; j < dataset[i].values.length; j++) {
+          if (newValue[0] > dataset[i].values[j].date || dataset[i].values[j].date > newValue[1]) {
+          dataset[i].values.splice(j, 1);
+          j--;
+        }
+      }
+    }
+    createGraph(dataset, d3MultiLineChart);
+  };
 
   useEffect(() => {
     let dataset = TreatData(data);
@@ -246,13 +265,23 @@ const Evolution = (props) => {
   return (
     <>
       <h1>Netflix's content evolution over the years</h1>
-      <div className="dropdown">
-        <button className="dropbtn">Country</button>
-        <div className="dropdown-content">
-          <p>Link 1</p>
-          <p>Link 2</p>
-          <p>Link 3</p>
-        </div>
+      <div className="descriptionChart">
+        <p>
+          In this line chart you can see the number of movies and tv shows added
+          on Netflix per year. You can select the time range you want to
+          analyze.
+        </p>
+      </div>
+      <div className="boxSlider">
+        <Box sx={{ width: 300 }}>
+          <Slider
+            min={2008}
+            max={2021}
+            value={value}
+            onChange={handleChange}
+            valueLabelDisplay="auto"
+          />
+        </Box>
       </div>
       <div className="evolution-chart">
         <svg ref={d3MultiLineChart}></svg>

@@ -7,9 +7,8 @@ const World = (props) => {
   const d3Map = useRef();
 
   const { data } = props;
-  
-  useEffect(() => {
 
+  useEffect(() => {
     const svg = d3.select(d3Map.current),
       width = 800 * (14 / 9),
       height = 750,
@@ -25,7 +24,7 @@ const World = (props) => {
     let world;
 
     // style of geographic projection and scaling
-    const projection = d3.geoMercator().translate([width / 2, height / 2]);
+    const projection = d3.geoNaturalEarth1().translate([width / 2, height / 2]);
 
     // Define color scale
     const colorScale = d3
@@ -205,11 +204,18 @@ const World = (props) => {
   return (
     <>
       <h1>Number of Movies and TV Shows by Country</h1>
+      <div className="descriptionChart">
+        <p>
+          In this choropleth map you can see the distribution of Netflix's
+          content by their respective country of origin.
+        </p>
+      </div>
       <div
         class="map"
         style={{
           backgroundColor: "rgb(34 34 34)",
           boxShadow: "0px 0px 0px #000000",
+          marginTop: "2rem"
         }}
       >
         <svg ref={d3Map}></svg>

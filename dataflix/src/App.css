@@ -7,3 +7,10 @@ h1 {
   text-align: center;
   color: #e26666;
 }
+
+.descriptionChart {
+  text-align: center;
+  margin-left: 3%;
+  margin-right: 3%;
+  font-size: 1.2em;
+}
