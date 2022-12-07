@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/static/css/main.90f2ab8d.css",
-    "main.js": "/static/js/main.ef139633.js",
-    "static/js/787.6065ce96.chunk.js": "/static/js/787.6065ce96.chunk.js",
-    "static/media/netflix_titles.csv": "/static/media/netflix_titles.c10f1733bfa4c5ceee6b.csv",
-    "index.html": "/index.html",
-    "main.90f2ab8d.css.map": "/static/css/main.90f2ab8d.css.map",
-    "main.ef139633.js.map": "/static/js/main.ef139633.js.map",
-    "787.6065ce96.chunk.js.map": "/static/js/787.6065ce96.chunk.js.map"
+    "main.css": "/dataflix-vi-project/static/css/main.90f2ab8d.css",
+    "main.js": "/dataflix-vi-project/static/js/main.3a27de3f.js",
+    "static/js/787.6065ce96.chunk.js": "/dataflix-vi-project/static/js/787.6065ce96.chunk.js",
+    "static/media/netflix_titles.csv": "/dataflix-vi-project/static/media/netflix_titles.c10f1733bfa4c5ceee6b.csv",
+    "index.html": "/dataflix-vi-project/index.html",
+    "main.90f2ab8d.css.map": "/dataflix-vi-project/static/css/main.90f2ab8d.css.map",
+    "main.3a27de3f.js.map": "/dataflix-vi-project/static/js/main.3a27de3f.js.map",
+    "787.6065ce96.chunk.js.map": "/dataflix-vi-project/static/js/787.6065ce96.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.90f2ab8d.css",
-    "static/js/main.ef139633.js"
+    "static/js/main.3a27de3f.js"
   ]
 }
