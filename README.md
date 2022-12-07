@@ -2,7 +2,7 @@
 Data visualization website for Netflix's content.
 
 
-Refrences 
+References 
 * https://codepen.io/bwiacek/pen/pXZEvK
 * https://d3-graph-gallery.com/graph/choropleth_hover_effect.html
 * https://d3-graph-gallery.com/graph/barplot_button_data_simple.html
