@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/Dataflix/static/css/main.90f2ab8d.css",
-    "main.js": "/Dataflix/static/js/main.481c08b4.js",
-    "static/js/787.6065ce96.chunk.js": "/Dataflix/static/js/787.6065ce96.chunk.js",
-    "static/media/netflix_titles.csv": "/Dataflix/static/media/netflix_titles.c10f1733bfa4c5ceee6b.csv",
-    "index.html": "/Dataflix/index.html",
-    "main.90f2ab8d.css.map": "/Dataflix/static/css/main.90f2ab8d.css.map",
-    "main.481c08b4.js.map": "/Dataflix/static/js/main.481c08b4.js.map",
-    "787.6065ce96.chunk.js.map": "/Dataflix/static/js/787.6065ce96.chunk.js.map"
+    "main.css": "/static/css/main.90f2ab8d.css",
+    "main.js": "/static/js/main.ef139633.js",
+    "static/js/787.6065ce96.chunk.js": "/static/js/787.6065ce96.chunk.js",
+    "static/media/netflix_titles.csv": "/static/media/netflix_titles.c10f1733bfa4c5ceee6b.csv",
+    "index.html": "/index.html",
+    "main.90f2ab8d.css.map": "/static/css/main.90f2ab8d.css.map",
+    "main.ef139633.js.map": "/static/js/main.ef139633.js.map",
+    "787.6065ce96.chunk.js.map": "/static/js/787.6065ce96.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.90f2ab8d.css",
-    "static/js/main.481c08b4.js"
+    "static/js/main.ef139633.js"
   ]
 }
