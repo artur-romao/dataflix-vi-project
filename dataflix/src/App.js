@@ -43,6 +43,7 @@ function App() {
               <NavBar></NavBar>
               <Routes>
                 <Route exact path="/dataflix-vi-project" element={<Home data={data}/>}></Route>
+                <Route exact path="/" element={<Home data={data}/>}></Route>
                 <Route path="/evolution" element={<Evolution data={data}/>}></Route>
                 <Route path="/world" element={<World data={data}/>}></Route>
                 <Route path="/age-restriction" element={<AgeRestriction data={data}/>}></Route>
