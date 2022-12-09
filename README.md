@@ -1,6 +1,8 @@
 # Dataflix
 Data visualization website for Netflix's content.
 
+Available in: https://artur-romao.github.io/dataflix-vi-project/
+
 
 References 
 * https://codepen.io/bwiacek/pen/pXZEvK
