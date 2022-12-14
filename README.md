@@ -1,8 +1,8 @@
 # Dataflix
-Data visualization website for Netflix's content.
+Dataflix is a data visualization application for all movies and series available on Netflix. Shows details about content, such as: age restriction, country of production, year added to Netflix, etc.
 
 Available in: https://artur-romao.github.io/dataflix-vi-project/
-
+Used dataset: https://www.kaggle.com/datasets/shivamb/netflix-shows 
 
 References 
 * https://codepen.io/bwiacek/pen/pXZEvK
